@@ -13,18 +13,26 @@
                 :key="rowIndex"
                 class="d-flex align-items-center"
               >
-                <strong class="me-2">{{ row }}</strong>
-                <!-- ✅ Thêm chữ bên trái -->
-                <div v-for="(seat, seatIndex) in seatColumns" :key="seatIndex">
+                <strong class="me-2">{{ row.columnChair }}</strong>
+                <div v-for="(seat, seatIndex) in row.rowChairs" :key="seatIndex">
                   <button
-                    @click="toggleSeat(row, seat)"
-                    :class="['seat-btn', seatStatus(row, seat)]"
+                    @click="toggleSeat(row.columnChair, seat)"
+                    :class="[
+                      'seat-btn',
+                      seatStatus(row.columnChair, seat, row.status[seatIndex]),
+                    ]"
                   >
                     {{ seat }}
                   </button>
                 </div>
               </div>
             </div>
+          </div>
+          <div class="seat-legend d-flex align-items-center mt-3">
+            <div class="seat-box selected"></div>
+            <span class="ms-2">Ghế đã bán</span>
+            <div class="seat-box available ms-4"></div>
+            <span class="ms-2">Ghế trống</span>
           </div>
         </div>
       </div>
@@ -36,7 +44,7 @@
         <img :src="movie.image" class="img-fluid my-2" alt="Poster phim" />
         <p><strong>Galaxy Đà Nẵng - RAP 3</strong></p>
         <p>
-          Suất: <b style=""> {{ movie.startTime }} - {{ movie.releaseDate }} </b>
+          Suất: <b>{{ movie.startTime }} - {{ movie.releaseDate }}</b>
         </p>
 
         <hr />
@@ -57,7 +65,7 @@
           }}</strong>
         </div>
         <div class="mt-4 text-right btn-group">
-          <button class="btn-back">Quay lại</button>
+          <button class="btn-back" @click="goToMovieDetail">Quay lại</button>
           <button class="btn-update" @click="goToPayment">Tiếp tục</button>
         </div>
       </div>
@@ -66,68 +74,95 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-import { useRoute, useRouter } from "vue-router"; // ✅ import useRouter
-
+import { ref, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import axios from "axios";
 const route = useRoute();
-const router = useRouter(); // ✅ Khởi tạo router
-
+const router = useRouter();
 const movie = ref({
-  id: route.query.movieId,
-  title: route.query.title,
-  image: route.query.image,
-  releaseDate: route.query.releaseDate,
-  startTime: route.query.startTime,
+  movieId: Number(route.query.movieId) || null,
+  showtimeId: Number(route.query.showtimeId) || null,
+  title: route.query.title || "",
+  image: route.query.image || "",
+  releaseDate: route.query.releaseDate || "",
+  startTime: route.query.startTime || "",
   price: Number(route.query.price) || 0,
 });
 
-const seatRows = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
-const seatColumns = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-const soldSeats = ref(["C5", "D6", "F7", "G8"]);
-const selectedSeats = ref([]);
-
-// Hàm format tiền VND
-function formatVND(value) {
-  return new Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-  }).format(value);
+const goToMovieDetail = () => {
+  router.push("/"); // Thay đường dẫn phù hợp với router của bạn
+};
+const seatRows = ref([]);
+const selectedSeats = ref([]); // Ghế đang chọn
+async function fetchSeats() {
+  try {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    if (!userInfo?.token) {
+      alert("Bạn chưa đăng nhập!");
+      router.push("/login");
+      return;
+    }
+    const response = await axios.get(
+      `http://localhost:8080/api/v1/customer/chair/byMovieAndShowDateAndShowTime`,
+      {
+        headers: { Authorization: `Bearer ${userInfo.token}` },
+        params: {
+          movieId: movie.value.movieId,
+          showDateId: Number(route.query.showDateId),
+          showTimeId: movie.value.showtimeId,
+        },
+      }
+    );
+    seatRows.value = response.data.chairs;
+  } catch (error) {
+    console.error("Lỗi khi tải danh sách ghế:", error);
+  }
 }
-
+onMounted(fetchSeats);
+// Format tiền VND
+function formatVND(value) {
+  return new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(
+    value
+  );
+}
+// Xác định trạng thái ghế
+function seatStatus(row, seat, status) {
+  const seatCode = `${row}${seat}`;
+  if (status === 0) return "sold"; // Ghế đã đặt từ backend (màu vàng)
+  if (selectedSeats.value.includes(seatCode)) return "selected"; // Ghế đang chọn (màu xanh)
+  return "available"; // Ghế trống (màu trắng)
+}
+// Xử lý chọn ghế
 function toggleSeat(row, seat) {
   const seatCode = `${row}${seat}`;
-  if (soldSeats.value.includes(seatCode)) return;
+  const chair = seatRows.value.find((r) => r.columnChair === row);
+  const seatIndex = chair?.rowChairs.indexOf(seat);
+  if (seatIndex === -1 || chair.status[seatIndex] === 0) {
+    return; // Ghế đã đặt thì không được chọn
+  }
   if (selectedSeats.value.includes(seatCode)) {
     selectedSeats.value = selectedSeats.value.filter((s) => s !== seatCode);
   } else {
     selectedSeats.value.push(seatCode);
   }
 }
-
-function seatStatus(row, seat) {
-  const seatCode = `${row}${seat}`;
-  if (soldSeats.value.includes(seatCode)) return "sold";
-  if (selectedSeats.value.includes(seatCode)) return "selected";
-  return "";
-}
-
 function goToPayment() {
   const query = {
-    movieId: movie.value.id,
+    movieId: movie.value.movieId, //  Gán đúng movieId
+    showtimeId: movie.value.showtimeId, //  Gán đúng showtimeId
     title: movie.value.title,
     image: movie.value.image,
     releaseDate: movie.value.releaseDate,
     startTime: movie.value.startTime,
     price: movie.value.price,
-    selectedSeats: selectedSeats.value.join(","), // chuỗi ghế: A1,A2,A3
+    selectedSeats: selectedSeats.value.join(","),
     totalPrice: selectedSeats.value.length * movie.value.price,
-    seatCount: selectedSeats.value.length ,
+    seatCount: selectedSeats.value.length,
+    showDateId: Number(route.query.showDateId),
   };
-
-  router.push({ path: "/payment", query }); // ✅ Bây giờ router đã sẵn sàng
+  router.push({ path: "/payment", query }); //  Bây giờ router đã sẵn sàng
 }
 </script>
-
 <style scoped>
 .booking-page {
   max-width: 1000px;
@@ -153,38 +188,49 @@ strong {
   gap: 8px; /* Khoảng cách giữa chữ hàng và các ghế */
 }
 
+/* Kích thước và style ghế */
 .seat-btn {
   width: 40px;
   height: 40px;
-  border: 1px solid #ccc;
+  margin: 2px;
+  border: none;
   border-radius: 5px;
-  background-color: #f8f9fa;
   font-weight: bold;
-  text-align: center;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s;
 }
 
-.seat-btn:hover {
-  background-color: #dee2e6;
+/* Trạng thái ghế */
+.seat-btn.available {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.seat-btn.sold {
+  background-color: gold;
+  color: #fff;
+  cursor: not-allowed;
 }
 
 .seat-btn.selected {
   background-color: #28a745;
-  color: white;
+  color: #fff;
 }
 
-.seat-btn.occupied {
-  background-color: #dc3545;
-  color: white;
-  cursor: not-allowed;
+/* Màn hình */
+.screen {
+  background-color: #ec4b00;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
 }
 
-.seat-btn.available {
-  background-color: #f8f9fa;
-  color: black;
+/* Grid sắp ghế */
+.seat-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
-
 strong {
   min-width: 20px; /* Đảm bảo chữ hàng có độ rộng cố định */
   text-align: right;
@@ -230,5 +276,35 @@ strong {
 ::v-deep(.text-orange) {
   color: orangered !important;
   font-weight: bold;
+}
+hr {
+  border: none;
+  height: 3px;
+  background: linear-gradient(to right, #e74100, #e43500);
+  margin: 20px 0;
+}
+.seat-btn {
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.seat-btn.selected {
+  background-color: rgb(0, 195, 29);
+  border-color: #ffcc00;
+}
+.seat-box {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ccc;
+  margin-right: 5px;
+}
+.seat-box.selected {
+  background-color: yellow;
+}
+.seat-box.available {
+  background-color: white;
 }
 </style>

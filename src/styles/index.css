@@ -316,3 +316,18 @@ p a {
 p a:hover {
   text-decoration: underline;
 }
+.toast-success {
+  background-color: #4caf50 !important; /* Màu xanh lá */
+}
+
+.toast-error {
+  background-color: #f44336 !important; /* Màu đỏ */
+}
+
+.toast-info {
+  background-color: #2196f3 !important; /* Màu xanh dương */
+}
+
+.toast-warning {
+  background-color: #ff9800 !important; /* Màu cam */
+}

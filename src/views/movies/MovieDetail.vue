@@ -2,7 +2,7 @@
   <div class="movie-detail">
     <div class="trailer-banner">
       <img
-        src="https://cdn.galaxycine.vn/media/2025/2/3/shopee-pay-2_1738565481057.jpg"
+        src="https://cdn.galaxycine.vn/media/2025/2/17/nha-gia-tien-750_1739775155248.jpg"
         alt="Poster phim"
       />
     </div>
@@ -35,6 +35,9 @@
               <div class="fs-5 text-warning mb-2 mt-4">⭐ {{ movie.rating }}</div>
               <ul class="list-unstyled mb-0 mt-4" style="font-size: 14px">
                 <li><strong>Quốc gia:</strong> {{ movie.nation }}</li>
+                <p class="mt-2">Nhà sản xuất:</p>
+                <p class="mt-2">Đạo diễn:</p>
+                <p class="mt-2">Diễn viên:</p>
               </ul>
             </div>
           </div>
@@ -43,7 +46,7 @@
             <strong>Nội dung phim:</strong>
             <p>{{ movie.description }}</p>
           </div>
-
+          <hr />
           <div class="movie-description">
             <strong>Lịch chiếu</strong>
             <div class="d-flex flex-wrap gap-2 mt-3">
@@ -59,12 +62,14 @@
 
             <ul v-if="selectedShowTimes.length" class="mt-3">
               <li>
-                <div class="d-flex gap-3 ">
+                <div class="d-flex gap-3">
                   <button
                     v-for="time in selectedShowTimes"
                     :key="time.id"
                     class="time-btn"
-                    @click="goToBooking(selectedDateShow, time.startTime, time.price)"
+                    @click="
+                      goToBooking(selectedDateShow, time.startTime, time.price, time.id)
+                    "
                   >
                     ⏰ {{ time.startTime }}
                   </button>
@@ -77,7 +82,16 @@
 
       <div class="col-md-4">
         <h5>PHIM ĐANG CHIẾU</h5>
-        <!-- Thêm danh sách phim khác nếu cần -->
+        <hr />
+        <img
+          src="https://s3-alpha-sig.figma.com/img/5c1e/bdec/a71b0fc126ae4ee0d69169cc52f6def6?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=fJ7Qk~9GMG5WRjeiNsfoRhU7yMJz4f6yP3A-FCLU9jiVC8HtJW489YhqE1XDusEjTJOw9D6Y6Rq40JqSFAIUjISAn5MEP0pcjprJLNRzQUPgcog2cR24nwhPWhUEx-K8hJP5L08BrLQHFvWVB345fqZbHG8GFTVtLo297xPbGywVVBR7Nqc9nTbDtEvNFs5LMVSBzENgvtusI2rtLK9h0FPLUjueVLvovokS5QMedEVNDG6EeBUWmLu~d-ibyEWOWW0ZwgO-tPzLLUJJUaVI~8ftD52ijEsObsmT9BgFOOaiEB63lFjXCAXS5ktajvmvOIR1weVyneGz493xotVlyQ__"
+        />
+        <h3><p class="mt-3 fw-bold text-start">Hành Tinh Khỉ: Vương Quốc Mới</p></h3>
+        <hr class="dashed-hr" />
+        <img
+          src="https://s3-alpha-sig.figma.com/img/5c1e/bdec/a71b0fc126ae4ee0d69169cc52f6def6?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=fJ7Qk~9GMG5WRjeiNsfoRhU7yMJz4f6yP3A-FCLU9jiVC8HtJW489YhqE1XDusEjTJOw9D6Y6Rq40JqSFAIUjISAn5MEP0pcjprJLNRzQUPgcog2cR24nwhPWhUEx-K8hJP5L08BrLQHFvWVB345fqZbHG8GFTVtLo297xPbGywVVBR7Nqc9nTbDtEvNFs5LMVSBzENgvtusI2rtLK9h0FPLUjueVLvovokS5QMedEVNDG6EeBUWmLu~d-ibyEWOWW0ZwgO-tPzLLUJJUaVI~8ftD52ijEsObsmT9BgFOOaiEB63lFjXCAXS5ktajvmvOIR1weVyneGz493xotVlyQ__"
+        />
+        <h3><p class="mt-3 fw-bold text-start">Hành Tinh Khỉ: Vương Quốc Mới</p></h3>
       </div>
     </div>
   </div>
@@ -86,12 +100,14 @@
 <script>
 import axios from "axios";
 
+import { useModalStore } from "@/stores/modalStore";
 export default {
   data() {
     return {
       movie: null,
       selectedShowTimes: [],
       selectedDateShow: "",
+      modalStore: useModalStore(), // Khởi tạo store ở đây
     };
   },
   created() {
@@ -105,28 +121,38 @@ export default {
         console.error("Lỗi khi lấy thông tin phim:", error);
       });
   },
+  
   methods: {
     selectShowTimes(date) {
       this.selectedShowTimes = date.showTimes;
       this.selectedDateShow = date.dateShow;
+      this.selectedDateId = date.id; //  Lưu id của ngày chiếu
     },
-    goToBooking(dateShow, startTime, price) {
-      this.$router.push({
-        path: "/booking",
-        query: {
-          movieId: this.movie.id,
-          title: this.movie.title,
-          image: this.movie.image,
-          releaseDate: dateShow,
-          startTime: startTime,
-          price: price,
-        },
-      });
+    goToBooking(dateShow, startTime, price, showtimeId) {
+      console.log("showtimeId được chọn:", showtimeId); // Debug giá trị trước khi push
+      if (!this.modalStore.isAuthenticated) {
+        // Nếu chưa đăng nhập, mở modal đăng nhập
+        this.modalStore.openLoginModal();
+      } else {
+        // Nếu đã đăng nhập, chuyển hướng đến trang đặt vé
+        this.$router.push({
+          path: "/booking",
+          query: {
+            showtimeId: showtimeId,
+            movieId: this.movie.id,
+            title: this.movie.title,
+            image: this.movie.image,
+            releaseDate: dateShow,
+            showDateId: this.selectedDateId, 
+            startTime: startTime,
+            price: price,
+          },
+        });
+      }
     },
   },
 };
 </script>
-
 <style scoped>
 .movie-detail {
   background-color: black;
@@ -136,8 +162,8 @@ export default {
 }
 
 .trailer-banner {
-  width: 100%; /* Điều chỉnh theo nhu cầu, ví dụ 80% màn hình */
-  max-width: 1200px; /* Giới hạn chiều rộng tối đa */
+  width: 75%; /* Điều chỉnh theo nhu cầu, ví dụ 80% màn hình */
+  max-width: 800px; /* Giới hạn chiều rộng tối đa */
   overflow: hidden;
   border-radius: 8px; /* Bo góc nhẹ */
 }
@@ -292,5 +318,30 @@ h2 {
 .schedule-buttons strong {
   margin-left: 5px;
   font-size: 16px;
+}
+.dashed-hr {
+  border: none;
+  border-top: 3px dashed #000000;
+  margin: 15px 0;
+}
+.time-btn {
+  padding: 12px 20px; /* Tăng kích thước bên trong */
+  font-size: 16px; /* Chữ to hơn */
+  min-width: 80px; /* Chiều ngang tối thiểu */
+  height: 50px; /* Chiều cao cố định */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.time-btn:hover {
+  background-color: #ff5500;
+  color: white;
+  border-color: #ff5500;
+  transform: translateY(-2px); /* Hover nổi lên nhẹ */
 }
 </style>

@@ -3,13 +3,13 @@
     <div class="row align-items-center w-100">
       <!-- Cột Logo + Nút Mua Vé -->
       <div class="col-4 d-flex align-items-center justify-content-start">
-        <div class="logo">
+        <button class="logo" @click="goToHome">
           <img
             src="https://www.galaxycine.vn/_next/static/media/galaxy-logo-mobile.074abeac.png"
             alt="Galaxy Cinema"
           />
-        </div>
-        <button class="ticket-button">
+        </button>
+        <button class="ticket-button" @click="goToHome">
           <img
             src="https://www.galaxycine.vn/_next/static/media/btn-ticket.42d72c96.webp"
             style="height: 40px; width: 100px"
@@ -127,7 +127,10 @@
 <script setup>
 import { useModalStore } from "@/stores/modalStore";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 // 🛠 Chỉ gọi useModalStore() một lần
+const router = useRouter();
+
 const modalStore = useModalStore();
 // Hàm mở modal
 const openLoginModal = () => {
@@ -145,6 +148,10 @@ const hideDropdown = () => {
 
 const handleLogout = () => {
   modalStore.logout();
+};
+// Hàm chuyển về trang chủ
+const goToHome = () => {
+  router.push("/");
 };
 </script>
 
@@ -168,6 +175,13 @@ const handleLogout = () => {
   height: 40px;
 }
 
+/* Ticket Button */
+.logo {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 15px;
+}
 /* Ticket Button */
 .ticket-button {
   background: none;

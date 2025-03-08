@@ -64,7 +64,7 @@
         <div class="col-md-4 col-12 mb-3">
           <div class="box p-3">
             <img
-              src="https://s3-alpha-sig.figma.com/img/4e8c/8dc8/8add2c46d8d841bd17d2f07cd5aac453?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=VSQeO9cBXfwrNBQaKGAUm3DmvTZe2kLgVvjOxrvHcp4yQUel~cHsWwmql3Nlq2ddesAEcTSWTk-V8aDjPl1HU14SzcnYyXqdfIMpJQC5Aqc5F6yHXoIiL5hgzDl0wgTpYoOE9LHpQ1MfnZzEUMKKTPSyW6rU5nr6cwAp2WrcCFbzdkOkjHOJpLZkdPWYTxG97WpJyXNNwYw5UJAxOjpwlQCSOTc1QpmNIxMWW1HIcd9B9qpGsAmaNyso5RD1F2eAkRTZFTR0fdku17UseETD~67Cs3EDa4m1uumQw7E0N9fFKrT315l8KN-gauDcMHum0Yqjwa2VkWKGHeTJpFmbJw__"
+              src="https://s3-alpha-sig.figma.com/img/4510/fb63/9ec93df2ae9ae012cf4aae21818a01d1?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=APbpNIeD6h2kvYNtanjXfl3V2vOwStbtuPoMDz-4sFOZnVAtiuJq6UcPhK1QPIc2HJThOudD-V~~YMp3zemGVK1Pxs4oQxIa0MxStXzccTW~QXBn1xMYw9hoHCOAlLWVS4ntMU5hE7527yDkHkiXuFek-i7siM-iw659Ymm7YvKfgWO~AUjTCP1dKma6YB9y9zeGmIYRehu3AHOsQvKKme0fV5j6R2v6b-drBymxDmJmfETZxQh0jHyjYCg8ZkS2i6YGt0PSm~bzOWVCpyuNLj~gzZm-HXYLx0UpKB-UpQmkHEgS-EVnv7P01eyBGUmkh1hduJki37QxCM32D0LHxQ__"
               class="img-fluid rounded"
               alt="Khuyến mãi 1"
             />
@@ -77,7 +77,7 @@
         <div class="col-md-4 col-12 mb-3">
           <div class="box p-3">
             <img
-              src="https://s3-alpha-sig.figma.com/img/4510/fb63/9ec93df2ae9ae012cf4aae21818a01d1?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=W0fuiZ7yx~qPXdmZdOiTzAx4ROaO8qhq60DKeI3suF6NI1WvBsH~CZkt1aXvgK1~~U1YqpKcGuVLpQI~U2npiiu75nTW~82rJaywIQgoDZrpUBNTNrRPoW3PymgJSqoYMNLUgQ1qphYbWWIWStl9fgzvyy3gRZS50wzvWaCkvVy5yvHoViuDdlmUs~RGpTwBtjPfDsbPIYHFS9wT0SxRc3o0R2JG8FIlJsOgj~HTO63IzOe10cO~1VbdPLP2N0xPGteQOc8JDXSDV1FBOsAEts~8weo6AKvUDqRG96cTOYT4-2hVSKqsJid6qBzti9vgg95O3syzviVipoAvbDEZgA__"
+              src="https://s3-alpha-sig.figma.com/img/b757/dd92/a71b8ccbea17a5744a6f9dad0bcdfba3?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=ZLLqYDCcaty-wp1zLTe73ajHxRaeFY4DkxO3TzUSanhWsyGZe7ew8s4-wEVLGfP51bSEBa~LAdYiw-CqOG8SBn-7sgaf87~cthmp4FGnEvJpuVOIm1m08gN6GD4OaLQIP6FPB0xaM22p6GEIzVQ-yrUW4uLzHhhr2bMfHNYWMX~xzy1IqMW~ej98zT9s0LS3bDuACvT9c-eBRUOZY7wVplnCaFVriEA8N-sCn0Hc6h7xb2s-Mx38yMNavQvnotEvImWEib01FID6YHo-OmBbjPEC12Cy7hBw16mxY5Bgf0ZIUWPVMBWPThtEsPAvXMEECXbxwRm5yqbZ903iKNoT0w__"
               class="img-fluid rounded"
               alt="Khuyến mãi 2"
             />
@@ -91,7 +91,7 @@
         <div class="col-md-4 col-12 mb-3">
           <div class="box p-3">
             <img
-              src="https://s3-alpha-sig.figma.com/img/b757/dd92/a71b8ccbea17a5744a6f9dad0bcdfba3?Expires=1740960000&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=hEwO37jJqSnEzRMg4NOqkecWykt5w8rNGY83LkEM8i2mJi3BSZ58URspLGdY1DHtLR-WNHxAcxXrACJ4VDJSEf9Fvi43dmE3mR8bslCTrpEC26K9~VavD-8C93ZP8CaObUc1RdOvJ9ECRYmjwpgaR66Pv9mc1uxkplW8VpSeaYQDxKdzQFAWySSHJUnNqCyhW3xIONCyhOotpC1156RX79QVrLOagL-U9o6-NsOzDNiuXlARM8oF9Yys2bU-rDxFbVaAl8ZgtF4qMv2JDWYRz9PvtX8pAYLUGUC3YA0d-x1~pRnAmyBkDG3rYR5L47cvpwHU5Do7dxWz0AFbiYR~Mg__"
+              src="https://s3-alpha-sig.figma.com/img/4e8c/8dc8/8add2c46d8d841bd17d2f07cd5aac453?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=kJePj-BzdEEX~8F-0AX-DS~OVlLghI7Hm8BpgSxcPVa207C01nf8gIjm5QU5XbsGgIbQCVbSH20c9MxFSvHLDMuzyLNsLbDWz~zlOcCjhyxp4ur59fdypSW2s-Rh1cD0p7DDx9Q9Q6d~pEHfuI7gd7rH8m4Z~DPKw85TPsEI1r~s~9Sa5nYLASY9mmv82ZJKd4zdcUdhMSLeBul0VfcC0tN6jivjF4a9BEl8LrigNOxOB4QfzG60vzj0~hitp~jycMVfPnigcvOlG3eeGzBviPLawuoBolORuT7R0O-jnkAPjjX8zFf5x4MG98k594709tX1~deOuNbFtR6i-PMlMQ__"
               class="img-fluid rounded"
               alt="Khuyến mãi 3"
             />
@@ -138,7 +138,7 @@ export default {
       loading: true,
       error: null,
       images: [
-        "https://cdn.galaxycine.vn/media/2025/2/3/shopee-pay-2_1738565481057.jpg",
+        "https://cdn.galaxycine.vn/media/2025/2/26/2048_1740556419688.jpg",
         "https://cdn.galaxycine.vn/media/2025/2/10/captambravenewworld-2048_1739183619915.jpg",
         "https://cdn.galaxycine.vn/media/2025/2/17/nha-gia-tien-2048_1739775223178.jpg",
         "https://cdn.galaxycine.vn/media/2024/12/31/samsung--2_1735640530505.jpg",

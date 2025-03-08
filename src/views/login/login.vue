@@ -40,6 +40,7 @@
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
+import toastr from "@/helpers/toastr";
 import { useModalStore } from "@/stores/modalStore";
 
 const modalStore = useModalStore();
@@ -47,6 +48,7 @@ const email = ref("");
 const password = ref("");
 const loading = ref(false);
 const showPassword = ref(false);
+
 const handleLogin = async () => {
   loading.value = true;
   try {
@@ -54,33 +56,41 @@ const handleLogin = async () => {
       email: email.value,
       password: password.value,
     });
-    
 
-    // API trả về { token, fullName }
-    modalStore.setUser({
-    userId: response.data.userId,
-    email: response.data.email,   // <-- phải có email
-    role: response.data.role,
-    token: response.data.token
-});
+    // Kiểm tra nếu API trả về dữ liệu hợp lệ
+    if (response.data.token) {
+      const userData = {
+        userId: response.data.userId,
+        email: response.data.email,
+        role: response.data.role,
+        token: response.data.token,
+      };
 
-    alert("Đăng nhập thành công!");
-    modalStore.closeLoginModal();
+      // Lưu vào localStorage để sử dụng sau này
+      localStorage.setItem("userInfo", JSON.stringify(userData));
+
+      // Gọi store để cập nhật trạng thái người dùng
+      modalStore.setUser(userData);
+      toastr.success("Đăng nhập thành công!");
+      modalStore.closeLoginModal();
+    } else {
+      throw new Error("Dữ liệu API không hợp lệ!");
+    }
   } catch (error) {
     console.error("Lỗi đăng nhập:", error.response?.data || error.message);
-    alert("Đăng nhập thất bại! Vui lòng kiểm tra lại tài khoản/mật khẩu.");
+    toastr.error("Đăng nhập thất bại! Vui lòng kiểm tra lại tài khoản/mật khẩu.");
   } finally {
     loading.value = false;
   }
 };
 
-// Hàm chuyển sang modal đăng ký
+// Chuyển sang đăng ký
 const switchToRegister = () => {
   modalStore.closeLoginModal();
   modalStore.openRegisterModal();
 };
 
-// Hàm toggle hiển thị mật khẩu
+// Hiển thị mật khẩu
 const togglePassword = () => {
   showPassword.value = !showPassword.value;
 };
