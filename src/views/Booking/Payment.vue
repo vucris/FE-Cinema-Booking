@@ -64,8 +64,8 @@ const router = useRouter();
 const query = route.query;
 const isModalOpen = ref(false);
 const selectedSeats = ref([]);
-console.log("🚀 Query từ route:", query);
-console.log("📍 selectedSeats dạng string:", query.selectedSeats);
+// console.log("Query từ route:", query);
+// console.log(" selectedSeats dạng string:", query.selectedSeats);
 function formatVND(amount) {
   return Number(amount).toLocaleString("vi-VN", {
     style: "currency",

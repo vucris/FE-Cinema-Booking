@@ -63,11 +63,17 @@
         <!-- Ô 1 -->
         <div class="col-md-4 col-12 mb-3">
           <div class="box p-3">
-            <img
-              src="https://s3-alpha-sig.figma.com/img/4510/fb63/9ec93df2ae9ae012cf4aae21818a01d1?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=APbpNIeD6h2kvYNtanjXfl3V2vOwStbtuPoMDz-4sFOZnVAtiuJq6UcPhK1QPIc2HJThOudD-V~~YMp3zemGVK1Pxs4oQxIa0MxStXzccTW~QXBn1xMYw9hoHCOAlLWVS4ntMU5hE7527yDkHkiXuFek-i7siM-iw659Ymm7YvKfgWO~AUjTCP1dKma6YB9y9zeGmIYRehu3AHOsQvKKme0fV5j6R2v6b-drBymxDmJmfETZxQh0jHyjYCg8ZkS2i6YGt0PSm~bzOWVCpyuNLj~gzZm-HXYLx0UpKB-UpQmkHEgS-EVnv7P01eyBGUmkh1hduJki37QxCM32D0LHxQ__"
-              class="img-fluid rounded"
-              alt="Khuyến mãi 1"
-            />
+            <a
+              href="https://www.galaxycine.vn/khuyen-mai/gia-ve-u22---dong-gia-45k/"
+              class="text-decoration-none"
+            >
+              <img
+                src="https://www.galaxycine.vn/media/2023/11/23/giaveu22-digital-1135x660_1700731582365.jpg"
+                class="img-fluid rounded"
+                alt="Khuyến mãi 1"
+              />
+            </a>
+
             <p class="mt-2 fw-bold" style="color: black">
               Mưa quà tặng dành cho thành viên GALAXY CINEMA 2025
             </p>
@@ -76,11 +82,13 @@
         <!-- Ô 2 -->
         <div class="col-md-4 col-12 mb-3">
           <div class="box p-3">
+          <a href="https://www.galaxycine.vn/khuyen-mai/u22-vui-ve---bap-nuoc-sieu-hat-de/">
             <img
-              src="https://s3-alpha-sig.figma.com/img/b757/dd92/a71b8ccbea17a5744a6f9dad0bcdfba3?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=ZLLqYDCcaty-wp1zLTe73ajHxRaeFY4DkxO3TzUSanhWsyGZe7ew8s4-wEVLGfP51bSEBa~LAdYiw-CqOG8SBn-7sgaf87~cthmp4FGnEvJpuVOIm1m08gN6GD4OaLQIP6FPB0xaM22p6GEIzVQ-yrUW4uLzHhhr2bMfHNYWMX~xzy1IqMW~ej98zT9s0LS3bDuACvT9c-eBRUOZY7wVplnCaFVriEA8N-sCn0Hc6h7xb2s-Mx38yMNavQvnotEvImWEib01FID6YHo-OmBbjPEC12Cy7hBw16mxY5Bgf0ZIUWPVMBWPThtEsPAvXMEECXbxwRm5yqbZ903iKNoT0w__"
+              src="https://www.galaxycine.vn/media/2024/4/2/banhrecrec-digital-1135x660_1712051399084.jpg"
               class="img-fluid rounded"
               alt="Khuyến mãi 2"
             />
+          </a>
             <p class="mt-2 fw-bold" style="color: black">
               U22 Vui vẻ - Bắp nước siêu hạt dẻ
             </p>
@@ -90,11 +98,13 @@
         <!-- Ô 3 -->
         <div class="col-md-4 col-12 mb-3">
           <div class="box p-3">
+          <a href="https://www.galaxycine.vn/khuyen-mai/uu-dai-thanh-vien-galaxy-cinema-2025/">
             <img
-              src="https://s3-alpha-sig.figma.com/img/4e8c/8dc8/8add2c46d8d841bd17d2f07cd5aac453?Expires=1742169600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=kJePj-BzdEEX~8F-0AX-DS~OVlLghI7Hm8BpgSxcPVa207C01nf8gIjm5QU5XbsGgIbQCVbSH20c9MxFSvHLDMuzyLNsLbDWz~zlOcCjhyxp4ur59fdypSW2s-Rh1cD0p7DDx9Q9Q6d~pEHfuI7gd7rH8m4Z~DPKw85TPsEI1r~s~9Sa5nYLASY9mmv82ZJKd4zdcUdhMSLeBul0VfcC0tN6jivjF4a9BEl8LrigNOxOB4QfzG60vzj0~hitp~jycMVfPnigcvOlG3eeGzBviPLawuoBolORuT7R0O-jnkAPjjX8zFf5x4MG98k594709tX1~deOuNbFtR6i-PMlMQ__"
+              src="https://www.galaxycine.vn/media/2025/1/22/bangqltv-digital-1135x660_1737516350592.jpg"
               class="img-fluid rounded"
               alt="Khuyến mãi 3"
             />
+          </a>
             <p class="mt-2 fw-bold style=" style="color: black">
               Happy Day - Vé chỉ từ 50k
             </p>
@@ -106,7 +116,9 @@
   <div class="blue-bar flex w-full h-[300px] p-4">
     <div class="container text-center">
       <div class="row">
-        <div class="col-sm-8 move-left "><img src="https://viettelmoney.vn/wp-content/uploads/2023/01/GALAXY1.jpg"></div>
+        <div class="col-sm-8 move-left">
+          <img src="https://viettelmoney.vn/wp-content/uploads/2023/01/GALAXY1.jpg" />
+        </div>
         <div class="col-sm-4">
           <h1 class="text-3xl text-white mb-4">Đặt Vé Online - Không Lo Trễ Nải</h1>
           <p class="text-sm text-white mb-5">
@@ -116,11 +128,23 @@
           <div class="container px-4 text-center">
             <div class="row">
               <div class="col">
-                <div class="p-3"><img src="https://www.galaxycine.vn/_next/static/media/glx-qr-code-1.218ae7da.svg"></div>
+                <div class="p-3">
+                  <img
+                    src="https://www.galaxycine.vn/_next/static/media/glx-qr-code-1.218ae7da.svg"
+                  />
+                </div>
               </div>
               <div class="col">
-                <div class="p-3"><img src="https://www.galaxycine.vn/_next/static/media/icon-ios-app-store.65ed00df.svg"></div>
-                <div class="p-3"><img src="https://www.galaxycine.vn/_next/static/media/icon-google-app-store.f4c38402.svg"></div>
+                <div class="p-3">
+                  <img
+                    src="https://www.galaxycine.vn/_next/static/media/icon-ios-app-store.65ed00df.svg"
+                  />
+                </div>
+                <div class="p-3">
+                  <img
+                    src="https://www.galaxycine.vn/_next/static/media/icon-google-app-store.f4c38402.svg"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -204,7 +228,7 @@ export default {
 .blue-bar {
   background-color: #002244; /* Nền xanh đậm */
   background-image: linear-gradient(rgba(255, 255, 255, 0.2) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
+    linear-gradient(90deg, rgba(255, 255, 255, 0.2) 1px, transparent 1px);
   background-size: 30px 30px; /* Kích thước ô rô */
   padding: 20px;
 }

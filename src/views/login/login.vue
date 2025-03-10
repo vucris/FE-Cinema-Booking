@@ -48,7 +48,6 @@ const email = ref("");
 const password = ref("");
 const loading = ref(false);
 const showPassword = ref(false);
-
 const handleLogin = async () => {
   loading.value = true;
   try {
@@ -56,7 +55,6 @@ const handleLogin = async () => {
       email: email.value,
       password: password.value,
     });
-
     // Kiểm tra nếu API trả về dữ liệu hợp lệ
     if (response.data.token) {
       const userData = {
@@ -65,10 +63,8 @@ const handleLogin = async () => {
         role: response.data.role,
         token: response.data.token,
       };
-
       // Lưu vào localStorage để sử dụng sau này
       localStorage.setItem("userInfo", JSON.stringify(userData));
-
       // Gọi store để cập nhật trạng thái người dùng
       modalStore.setUser(userData);
       toastr.success("Đăng nhập thành công!");
@@ -83,7 +79,6 @@ const handleLogin = async () => {
     loading.value = false;
   }
 };
-
 // Chuyển sang đăng ký
 const switchToRegister = () => {
   modalStore.closeLoginModal();

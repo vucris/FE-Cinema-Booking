@@ -121,7 +121,7 @@ export default {
         console.error("Lỗi khi lấy thông tin phim:", error);
       });
   },
-  
+
   methods: {
     selectShowTimes(date) {
       this.selectedShowTimes = date.showTimes;
@@ -143,7 +143,7 @@ export default {
             title: this.movie.title,
             image: this.movie.image,
             releaseDate: dateShow,
-            showDateId: this.selectedDateId, 
+            showDateId: this.selectedDateId,
             startTime: startTime,
             price: price,
           },

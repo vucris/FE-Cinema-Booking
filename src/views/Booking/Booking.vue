@@ -66,10 +66,28 @@
         </div>
         <div class="mt-4 text-right btn-group">
           <button class="btn-back" @click="goToMovieDetail">Quay lại</button>
-          <button class="btn-update" @click="goToPayment">Tiếp tục</button>
+          <button class="btn-update" @click="goToPayment" :disabled="isLoading">
+            <span v-if="isLoading">⏳ Đang xử lý...</span>
+            <span v-else>Tiếp tục</span>
+          </button>
         </div>
       </div>
     </div>
+  </div>
+  <!-- Hiệu ứng loading toàn trang -->
+
+  <div v-if="isLoading" class="loading-fullscreen">
+    <svg class="spinner-svg" viewBox="0 0 50 50">
+      <circle
+        class="spinner-path"
+        cx="25"
+        cy="25"
+        r="20"
+        fill="none"
+        stroke-width="5"
+      ></circle>
+    </svg>
+    <p>Đang xử lý đặt vé, chờ xíu nhé...</p>
   </div>
 </template>
 
@@ -79,6 +97,7 @@ import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 const route = useRoute();
 const router = useRouter();
+import toastr from "@/helpers/toastr";
 const movie = ref({
   movieId: Number(route.query.movieId) || null,
   showtimeId: Number(route.query.showtimeId) || null,
@@ -94,6 +113,7 @@ const goToMovieDetail = () => {
 };
 const seatRows = ref([]);
 const selectedSeats = ref([]); // Ghế đang chọn
+const isLoading = ref(false); // Trạng thái loading
 async function fetchSeats() {
   try {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -147,20 +167,30 @@ function toggleSeat(row, seat) {
   }
 }
 function goToPayment() {
-  const query = {
-    movieId: movie.value.movieId, //  Gán đúng movieId
-    showtimeId: movie.value.showtimeId, //  Gán đúng showtimeId
-    title: movie.value.title,
-    image: movie.value.image,
-    releaseDate: movie.value.releaseDate,
-    startTime: movie.value.startTime,
-    price: movie.value.price,
-    selectedSeats: selectedSeats.value.join(","),
-    totalPrice: selectedSeats.value.length * movie.value.price,
-    seatCount: selectedSeats.value.length,
-    showDateId: Number(route.query.showDateId),
-  };
-  router.push({ path: "/payment", query }); //  Bây giờ router đã sẵn sàng
+  if (selectedSeats.value.length === 0) {
+    toastr.warning("Vui lòng chọn ghế trước khi tiếp tục!");
+    return;
+  }
+
+  isLoading.value = true; // Hiển thị loading
+
+  setTimeout(() => {
+    isLoading.value = false; // Tắt loading
+    const query = {
+      movieId: movie.value.movieId,
+      showtimeId: movie.value.showtimeId,
+      title: movie.value.title,
+      image: movie.value.image,
+      releaseDate: movie.value.releaseDate,
+      startTime: movie.value.startTime,
+      price: movie.value.price,
+      selectedSeats: selectedSeats.value.join(","),
+      totalPrice: selectedSeats.value.length * movie.value.price,
+      seatCount: selectedSeats.value.length,
+      showDateId: Number(route.query.showDateId),
+    };
+    router.push({ path: "/payment", query }); // Chuyển trang sau 3 giây
+  }, 2500);
 }
 </script>
 <style scoped>
@@ -306,5 +336,56 @@ hr {
 }
 .seat-box.available {
   background-color: white;
+}
+.loading-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+  z-index: 9999;
+}
+
+.spinner-svg {
+  width: 80px;
+  height: 80px;
+  animation: rotate 1.5s linear infinite;
+}
+
+.spinner-path {
+  stroke: #ff6600;
+  stroke-dasharray: 90, 150;
+  stroke-dashoffset: 0;
+  stroke-linecap: round;
+  animation: dash 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -125;
+  }
 }
 </style>

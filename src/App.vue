@@ -1,31 +1,49 @@
 <template>
   <div id="app">
+    <Loading v-if="isLoading" />
     <Header />
     <router-view />
-    <LoginModal/>
-    <History/>
-    <Register/>
+    <LoginModal />
+    <History />
+    <Register />
     <Footer />
   </div>
 </template>
 
 <script>
+import { ref, provide, watchEffect } from "vue";
+import { useRoute } from "vue-router";
 import Header from "./components/Header.vue";
-import LoginModal from "./views/login/login.vue"; // ✅ Import modal
-import Register from "./views/login/register.vue";
-import infoUser from "./views/user/infoUser.vue";
-import History from "./views/user/History.vue";
 import Footer from "./components/Footer.vue";
+import LoginModal from "./views/login/login.vue";
+import Register from "./views/login/register.vue";
+import History from "./views/user/History.vue";
+import Loading from "./components/Loading.vue"; // Import spinner loading
 
 export default {
-  name: 'App',  
+  name: "App",
   components: {
     Header,
-    LoginModal, // ✅ Thêm vào components
-    Register,
-    infoUser,
-    History,
     Footer,
+    LoginModal,
+    Register,
+    History,
+    Loading,
+  },
+  setup() {
+    const isLoading = ref(false);
+    provide("isLoading", isLoading); // Cung cấp trạng thái loading toàn app
+
+    const route = useRoute();
+
+    watchEffect(() => {
+      isLoading.value = true; // Hiện loading khi chuyển trang
+      setTimeout(() => {
+        isLoading.value = false; // Ẩn loading sau 1.5 giây
+      }, 1500);
+    });
+
+    return { isLoading };
   },
 };
 </script>

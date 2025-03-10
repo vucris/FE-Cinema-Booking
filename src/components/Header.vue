@@ -4,10 +4,7 @@
       <!-- Cột Logo + Nút Mua Vé -->
       <div class="col-4 d-flex align-items-center justify-content-start">
         <button class="logo" @click="goToHome">
-          <img
-            src="https://www.galaxycine.vn/_next/static/media/galaxy-logo-mobile.074abeac.png"
-            alt="Galaxy Cinema"
-          />
+          <img src="/movielogo.png" alt="logo" />
         </button>
         <button class="ticket-button" @click="goToHome">
           <img
@@ -102,9 +99,12 @@
               <i class="bi bi-person-badge me-2"></i> Thông tin tài khoản
             </router-link>
             <router-link
-            to="/user/History"
-              class="dropdown-item d-flex align-items-center text-start" href="#">
-                <i class="bi bi-blockquote-right me-2"></i> Lịch sử giao dịch
+              to="/user/History"
+              class="dropdown-item d-flex align-items-center text-start"
+              @click="openHistoryTab"
+              href="#"
+            >
+              <i class="bi bi-blockquote-right me-2"></i> Lịch sử giao dịch
             </router-link>
             <li>
               <button

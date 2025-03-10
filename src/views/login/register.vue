@@ -13,19 +13,19 @@
           <h5>Đăng Ký Tài Khoản</h5>
           <form @submit.prevent="handleRegister">
             <div class="input-group">
-              <input type="text" v-model="full_name" placeholder="Họ và Tên" required />
+              <input type="text" v-model="fullName" placeholder="Họ và Tên" required />
             </div>
             <div class="input-group">
               <input type="email" v-model="email" placeholder="Email" required />
             </div>
             <div class="input-group">
-              <input type="text" v-model="phoneNumber" placeholder="Số điện thoại" required />
+              <input type="number" v-model="phoneNumber" placeholder="Số điện thoại"  :max="9999999999" maxlength="10" required />
             </div>
             <div class="input-group">
               <select v-model="gender" required>
                 <option value="male" disabled selected>Giới tính</option>
-                <option value="1">Nam</option>
-                <option value="2">Nữ</option>
+                <option value="0">Nam</option>
+                <option value="1">Nữ</option>
               </select>
             </div>
             <div class="input-group">
@@ -66,6 +66,7 @@
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
+import toastr from "@/helpers/toastr";
 import { useModalStore } from "@/stores/modalStore";
 
 const modalStore = useModalStore();
@@ -88,7 +89,6 @@ const handleRegister = async () => {
     alert("Mật khẩu không khớp!");
     return;
   }
-
   loading.value = true;
   try {
     await axios.post("http://localhost:8080/api/v1/auth/register-user", {
@@ -99,12 +99,25 @@ const handleRegister = async () => {
       birthday: birthday.value, 
       password: password.value,
     });
-    alert("Đăng ký thành công! Vui lòng đăng nhập.");
+    toastr.success("Đăng ký thành công! Vui lòng đăng nhập.");
     modalStore.closeRegisterModal();
     modalStore.openLoginModal();
   } catch (error) {
     console.error("Lỗi đăng ký:", error.response?.data || error.message);
-    alert("Đăng ký thất bại! Vui lòng thử lại.");
+    const errorMessage = error.response?.data;
+    
+    // Xử lý lỗi email đã tồn tại
+    if (errorMessage.includes("Email đã được sử dụng")) {
+      toastr.error("Email đã được sử dụng để đăng ký.");
+    } 
+    // Xử lý lỗi số điện thoại đã tồn tại
+    else if (errorMessage.includes("Duplicate entry") && errorMessage.includes("phone_number")) {
+      toastr.error("Số điện thoại đã được sử dụng để đăng ký.");
+    } 
+    // Lỗi chung
+    else {
+      toastr.error("Đăng ký thất bại! Vui lòng thử lại.");
+    }
   } finally {
     loading.value = false;
   }
@@ -114,7 +127,6 @@ const switchToLogin = () => {
   modalStore.closeRegisterModal();
   modalStore.openLoginModal();
 };
-
 // Hàm toggle mật khẩu
 const togglePassword = (field) => {
   if (field === 1) {
@@ -124,7 +136,6 @@ const togglePassword = (field) => {
   }
 };
 </script>
-
 <style scoped>
 .modal-overlay {
   position: fixed;
