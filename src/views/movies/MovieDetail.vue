@@ -34,10 +34,17 @@
               </div>
               <div class="fs-5 text-warning mb-2 mt-4">⭐ {{ movie.rating }}</div>
               <ul class="list-unstyled mb-0 mt-4" style="font-size: 14px">
-                <li><strong>Quốc gia:</strong> {{ movie.nation }}</li>
-                <p class="mt-2">Nhà sản xuất:</p>
-                <p class="mt-2">Đạo diễn:</p>
-                <p class="mt-2">Diễn viên:</p>
+                <li><strong>Quốc gia: </strong> {{ movie.nation }}</li>
+                <p class="mt-2"> <strong>Nhà sản xuất: </strong> {{ movie.nameDirector }}</p>
+                <!-- <p class="mt-2">Đạo diễn:</p> -->
+                <li class="mt-2"><strong>Đạo diễn:</strong> {{ movie.nameDirector }}</li>
+                <!-- <p class="mt-2">Diễn viên:</p> -->
+                <li class="mt-2">
+                  <strong>Diễn viên: </strong>
+                  <span v-if="movie.performers.length > 0">
+                    {{ movie.performers.map((p) => p.name).join(", ") }}
+                  </span>
+                </li>
               </ul>
             </div>
           </div>
@@ -61,7 +68,7 @@
             </div>
 
             <ul v-if="selectedShowTimes.length" class="mt-3">
-              <li>
+              <li style="list-style-type: none;">
                 <div class="d-flex gap-3">
                   <button
                     v-for="time in selectedShowTimes"

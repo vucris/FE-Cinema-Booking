@@ -15,7 +15,7 @@
             </div>
             <div class="input-group">
               <input
-              style="margin-top: 22px;"
+                style="margin-top: 22px"
                 :type="showPassword ? 'text' : 'password'"
                 v-model="password"
                 placeholder="Mật khẩu"
@@ -42,12 +42,15 @@ import { ref } from "vue";
 import axios from "axios";
 import toastr from "@/helpers/toastr";
 import { useModalStore } from "@/stores/modalStore";
+import { useRouter } from "vue-router"; // Import router
 
 const modalStore = useModalStore();
+const router = useRouter(); // Khai báo Vue Router
 const email = ref("");
 const password = ref("");
 const loading = ref(false);
 const showPassword = ref(false);
+
 const handleLogin = async () => {
   loading.value = true;
   try {
@@ -55,7 +58,7 @@ const handleLogin = async () => {
       email: email.value,
       password: password.value,
     });
-    // Kiểm tra nếu API trả về dữ liệu hợp lệ
+
     if (response.data.token) {
       const userData = {
         userId: response.data.userId,
@@ -63,12 +66,23 @@ const handleLogin = async () => {
         role: response.data.role,
         token: response.data.token,
       };
-      // Lưu vào localStorage để sử dụng sau này
-      localStorage.setItem("userInfo", JSON.stringify(userData));
-      // Gọi store để cập nhật trạng thái người dùng
-      modalStore.setUser(userData);
-      toastr.success("Đăng nhập thành công!");
-      modalStore.closeLoginModal();
+
+      if (userData.role === "ADMIN") {
+        //  Lưu ADMIN vào `adminInfo` để không bị ghi đè User
+        localStorage.setItem("adminInfo", JSON.stringify(userData));
+        toastr.success("Đăng nhập Admin thành công!");
+        router.push("/admin/dashboard");
+      } else if (userData.role === "USER") {
+        //  Lưu USER vào `userInfo`
+        localStorage.setItem("userInfo", JSON.stringify(userData));
+        toastr.success("Đăng nhập thành công!");
+        modalStore.setUser(userData);
+        router.push("/");
+      } else {
+        throw new Error("Vai trò không hợp lệ!");
+      }
+
+      modalStore.closeLoginModal(); // Đóng modal sau khi đăng nhập
     } else {
       throw new Error("Dữ liệu API không hợp lệ!");
     }
@@ -84,7 +98,6 @@ const switchToRegister = () => {
   modalStore.closeLoginModal();
   modalStore.openRegisterModal();
 };
-
 // Hiển thị mật khẩu
 const togglePassword = () => {
   showPassword.value = !showPassword.value;

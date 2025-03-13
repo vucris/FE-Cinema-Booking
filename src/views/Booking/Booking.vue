@@ -133,7 +133,9 @@ async function fetchSeats() {
         },
       }
     );
-    seatRows.value = response.data.chairs;
+    seatRows.value = response.data.chairs.sort((a, b) =>
+      a.columnChair.localeCompare(b.columnChair)
+    );
   } catch (error) {
     console.error("Lỗi khi tải danh sách ghế:", error);
   }
